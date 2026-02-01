@@ -3,6 +3,63 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
+void quizGame ()
+{
+
+    std::string question [] = {
+        "1.  What is my name", "2. WHat is my last name", "3. Is the earth flath", "4. Are burgers good"
+    };
+    std::string options[][4] = {{"A. burger boy", "B Zafar he", "C. Suhani", "D. Kiarad"},
+        {"A. Zafar Heidari" , "B. Burgerboy" ,"C. patel" ,"D. Josh"},
+        {"A. Yes", "B. No", "C. Maybe", "D. Kinda"}, {"A. Yes", "B. No", "C. Maybe", "D. Kinda"}};
+    char answer[] = {'D', 'A', 'B', 'A'};
+
+    int size = sizeof(question)/sizeof(question[0]);
+    int guesses = 1;
+    char guess;
+    bool run = true;
+
+    for (int i = 0; i < size; i++)
+    {
+        run = true;
+        std::cout << "*************************\n";
+        std::cout << question[i] << '\n';
+        std::cout << "*************************\n";
+
+        for (int j = 0; j < sizeof(options[i])/sizeof(options[j][0]); j++)
+        {
+            std::cout << options[i][j] << '\n';
+        }
+        while (run == true)
+        {
+            std::cin >> guess;
+            guess = std::toupper(guess);
+            if  (guess == answer[i])
+            {
+                std::cout <<"Correct\n";
+                guesses ++;
+                run =false;
+            }
+            else if (guess != 'A' && guess != 'B' && guess != 'C' && guess != 'D')
+            {
+                std::cout << "Type a correct option\n";
+                std::cin.clear(); // clears error flags (good practice)
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            else
+            {
+                std::cout << "Wrong answer\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                guesses ++;
+            }
+        };
+    }
+    std::cout << "You guessed " << guesses << " times\n";
+    return 0;
+
+}
+
 
 int main()
 {
@@ -150,56 +207,7 @@ int main()
 
     */
 /*
-    std::string question [] = {
-        "1.  What is my name", "2. WHat is my last name", "3. Is the earth flath", "4. Are burgers good"
-    };
-    std::string options[][4] = {{"A. burger boy", "B Zafar he", "C. Suhani", "D. Kiarad"},
-        {"A. Zafar Heidari" , "B. Burgerboy" ,"C. patel" ,"D. Josh"},
-        {"A. Yes", "B. No", "C. Maybe", "D. Kinda"}, {"A. Yes", "B. No", "C. Maybe", "D. Kinda"}};
-    char answer[] = {'D', 'A', 'B', 'A'};
 
-    int size = sizeof(question)/sizeof(question[0]);
-    int guesses = 1;
-    char guess;
-    bool run = true;
-
-    for (int i = 0; i < size; i++)
-    {
-        run = true;
-        std::cout << "*************************\n";
-        std::cout << question[i] << '\n';
-        std::cout << "*************************\n";
-
-        for (int j = 0; j < sizeof(options[i])/sizeof(options[j][0]); j++)
-        {
-            std::cout << options[i][j] << '\n';
-        }
-        while (run == true)
-            {
-        std::cin >> guess;
-        guess = std::toupper(guess);
-        if  (guess == answer[i])
-        {
-            std::cout <<"Correct\n";
-            guesses ++;
-            run =false;
-        }
-        else if (guess != 'A' && guess != 'B' && guess != 'C' && guess != 'D')
-        {
-            std::cout << "Type a correct option\n";
-            std::cin.clear(); // clears error flags (good practice)
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-        else
-        {
-            std::cout << "Wrong answer\n";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            guesses ++;
-        }
-            };
-    }
-std::cout << "You guessed " << guesses << " times\n";
 
 */
 
