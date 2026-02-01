@@ -1,8 +1,8 @@
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include <math.h>
-#include <limits>
 
 int main()
 {
@@ -202,7 +202,7 @@ std::cout << "You guessed " << guesses << " times\n";
 */
 
 
-//hello
+
 
     return 0;
 }
