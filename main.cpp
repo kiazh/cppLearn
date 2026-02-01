@@ -56,7 +56,6 @@ void quizGame ()
         };
     }
     std::cout << "You guessed " << guesses << " times\n";
-    return 0;
 
 }
 
