@@ -9,7 +9,8 @@ find_package(glfw3 3.3 REQUIRED)
 # GLM (header-only)
 find_package(glm REQUIRED)
 
-add_executable(Cpp main.cpp glad/src/glad.c)
+add_executable(Cpp main.cpp glad/src/glad.c
+)
 target_include_directories(Cpp PRIVATE glad/include)
 
 target_link_libraries(Cpp

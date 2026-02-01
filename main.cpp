@@ -6,6 +6,8 @@
 
 int main()
 {
+
+    /*
     /* working with std, general print std::cout <<
     std::cout <<"hello world" << std::endl;
     std::cout <<"wsg gng";
@@ -201,6 +203,39 @@ std::cout << "You guessed " << guesses << " times\n";
 
 */
 
+    if (!glfwInit())
+    {
+        std::cout << "Failed to initialize GLFW3" << std::endl;
+        return -1;
+    }
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+     GLFWwindow*window = glfwCreateWindow(900, 400, "my window", NULL, NULL);
+
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW3" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {  // 2. Load OpenGL functions
+        std::cout << "GLAD failed" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
 
 
 
