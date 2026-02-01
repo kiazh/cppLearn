@@ -200,17 +200,18 @@ void quizGame ()
     }
     std::cout << "You guessed " << guesses << " times\n";
 
-}
+};
 
+//lowky have no idea what this doea
 static unsigned int CreateShader(const std::string& vertex_shader_source, const std::string& fragment_shader_source)
 {
     unsigned int vs = glCreateShader(GL_VERTEX_SHADER);
-    const char* vSrc = vertex_shader_source.c_str();   // <- use parameter name
+    const char* vSrc = vertex_shader_source.c_str();
     glShaderSource(vs, 1, &vSrc, nullptr);
     glCompileShader(vs);
 
     unsigned int fs = glCreateShader(GL_FRAGMENT_SHADER);
-    const char* fSrc = fragment_shader_source.c_str(); // <- use parameter name
+    const char* fSrc = fragment_shader_source.c_str();
     glShaderSource(fs, 1, &fSrc, nullptr);
     glCompileShader(fs);
 
@@ -224,6 +225,44 @@ static unsigned int CreateShader(const std::string& vertex_shader_source, const 
 
     return program;
 }
+
+void setupCircle(unsigned int& shader, unsigned int& vao)
+{
+    // 1) build shaders
+    std::string vertexShader = R"(#version 330 core
+    layout(location = 0) in vec2 aPos;
+    void main() {
+        gl_Position = vec4(aPos, 0.0, 1.0);
+    })";
+
+    std::string fragmentShader = R"(#version 330 core
+    out vec4 FragColor;
+    void main() {
+        FragColor = vec4(1.0, 0.5, 0.2, 1.0);
+    })";
+
+    shader = CreateShader(vertexShader, fragmentShader);
+
+    // 2) vertex data (still a triangle for now; circle later)
+    float positions[6] = {
+        -0.5f, -0.5f,
+         0.0f,  0.5f,
+         0.5f, -0.5f
+    };
+
+    // 3) VAO + VBO
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    unsigned int buffer;
+    glGenBuffers(1, &buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+}
+
 
 
 int main()
@@ -256,37 +295,10 @@ int main()
         return -1;
     }
 
-    std::string vertexShader = R"(#version 330 core
-layout(location = 0) in vec2 aPos;
-void main() {
-    gl_Position = vec4(aPos, 0.0, 1.0);
-})";
+    unsigned int shader, vao;
+    setupCircle(shader, vao);
 
-    std::string fragmentShader = R"(#version 330 core
-out vec4 FragColor;
-void main() {
-    FragColor = vec4(1.0, 0.5, 0.2, 1.0); // orange
-})";
 
-    unsigned int shader = CreateShader(vertexShader, fragmentShader);
-
-    float position [6]
-    {
-        -0.5f, -0.5f,
-        0.0f, 0.5,
-        0.5, -0.5f
-    };
-
-    unsigned int vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    glViewport(0, 0, 900, 400);
-    unsigned int buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, 6*sizeof(float), position, GL_DYNAMIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), 0);
 
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
