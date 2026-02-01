@@ -208,20 +208,21 @@ std::cout << "You guessed " << guesses << " times\n";
         std::cout << "Failed to initialize GLFW3" << std::endl;
         return -1;
     }
-
+// tells  glfw  to use version
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    // Use "core profile" (modern OpenGL, no old deprecated functions)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+//creates the window, tell it to make it 900 by 400 and make its titled my window. makes it not full screen idk what last null is.
      GLFWwindow*window = glfwCreateWindow(900, 400, "my window", NULL, NULL);
-
+//error checking
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW3" << std::endl;
         glfwTerminate();
         return -1;
     }
-
+    // Make this window the "active" OpenGL context (all drawing goes here)
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {  // 2. Load OpenGL functions
@@ -230,13 +231,19 @@ std::cout << "You guessed " << guesses << " times\n";
         return -1;
     }
 
+    glViewport(0, 0, 900, 400);
+
+
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    glfwTerminate();
 
 
     return 0;
